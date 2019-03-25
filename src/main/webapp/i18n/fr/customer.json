@@ -1,0 +1,30 @@
+{
+    "kanefwApp": {
+        "customer": {
+            "home": {
+                "title": "Customers",
+                "createLabel": "Créer un nouveau Customer",
+                "createOrEditLabel": "Créer ou éditer un Customer",
+                "search": "Recherche pour Customer"
+            },
+            "created": "Un nouveau Customer a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Customer avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Customer avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Customer {{ id }} ?"
+            },
+            "detail": {
+                "title": "Customer"
+            },
+            "idNumber": "Id Number",
+            "idType": "Id Type",
+            "firstName": "First Name",
+            "middleName": "Middle Name",
+            "lastName": "Last Name",
+            "currentBalance": "Current Balance",
+            "accountNumber": "Account Number",
+            "pin": "Pin",
+            "transaction": "Transaction"
+        }
+    }
+}

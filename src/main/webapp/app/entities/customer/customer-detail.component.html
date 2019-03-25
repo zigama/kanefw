@@ -1,0 +1,55 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="customer">
+            <h2><span jhiTranslate="kanefwApp.customer.detail.title">Customer</span> {{customer.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="kanefwApp.customer.idNumber">Id Number</span></dt>
+                <dd>
+                    <span>{{customer.idNumber}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.customer.idType">Id Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'kanefwApp.IDType.' + customer.idType}}">{{customer.idType}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.customer.firstName">First Name</span></dt>
+                <dd>
+                    <span>{{customer.firstName}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.customer.middleName">Middle Name</span></dt>
+                <dd>
+                    <span>{{customer.middleName}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.customer.lastName">Last Name</span></dt>
+                <dd>
+                    <span>{{customer.lastName}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.customer.currentBalance">Current Balance</span></dt>
+                <dd>
+                    <span>{{customer.currentBalance}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.customer.accountNumber">Account Number</span></dt>
+                <dd>
+                    <span>{{customer.accountNumber}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.customer.pin">Pin</span></dt>
+                <dd>
+                    <span>{{customer.pin}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/customer', customer.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

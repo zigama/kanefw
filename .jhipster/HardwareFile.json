@@ -1,0 +1,80 @@
+{
+    "name": "HardwareFile",
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "size",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "mimeType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dateUploaded",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "version",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "FileStatus",
+            "fieldValues": "ALPHA,BETA,CANDIDATE,FINAL",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "category",
+            "fieldType": "FileCategory",
+            "fieldValues": "FIRMWARE,DATASHEET,DESIGN,MANUAL",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "content",
+            "otherEntityRelationshipName": "hardwareFile",
+            "relationshipName": "content",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "hardware",
+            "otherEntityRelationshipName": "hardwareFile",
+            "relationshipValidateRules": "required",
+            "relationshipName": "hardware",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190325132748",
+    "entityTableName": "hardware_file",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

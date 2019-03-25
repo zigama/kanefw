@@ -1,0 +1,136 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-hardware-file-heading" jhiTranslate="kanefwApp.hardwareFile.home.createOrEditLabel">Create or edit a Hardware File</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!hardwareFile.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="hardwareFile.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.hardwareFile.title" for="field_title">Title</label>
+                    <input type="text" class="form-control" name="title" id="field_title"
+                        [(ngModel)]="hardwareFile.title" required/>
+                    <div [hidden]="!(editForm.controls.title?.dirty && editForm.controls.title?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.title?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.hardwareFile.size" for="field_size">Size</label>
+                    <input type="number" class="form-control" name="size" id="field_size"
+                        [(ngModel)]="hardwareFile.size" required/>
+                    <div [hidden]="!(editForm.controls.size?.dirty && editForm.controls.size?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.size?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.size?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.hardwareFile.mimeType" for="field_mimeType">Mime Type</label>
+                    <input type="text" class="form-control" name="mimeType" id="field_mimeType"
+                        [(ngModel)]="hardwareFile.mimeType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.hardwareFile.dateUploaded" for="field_dateUploaded">Date Uploaded</label>
+                    <div class="input-group">
+                        <input id="field_dateUploaded" type="text" class="form-control" name="dateUploaded" ngbDatepicker  #dateUploadedDp="ngbDatepicker" [(ngModel)]="hardwareFile.dateUploaded"
+                        required/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dateUploadedDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div [hidden]="!(editForm.controls.dateUploaded?.dirty && editForm.controls.dateUploaded?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.dateUploaded?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.hardwareFile.version" for="field_version">Version</label>
+                    <input type="number" class="form-control" name="version" id="field_version"
+                        [(ngModel)]="hardwareFile.version" required/>
+                    <div [hidden]="!(editForm.controls.version?.dirty && editForm.controls.version?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.version?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.version?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.hardwareFile.status" for="field_status">Status</label>
+                    <select class="form-control" name="status" [(ngModel)]="hardwareFile.status" id="field_status"  required>
+                        <option value="ALPHA">{{'kanefwApp.FileStatus.ALPHA' | translate}}</option>
+                        <option value="BETA">{{'kanefwApp.FileStatus.BETA' | translate}}</option>
+                        <option value="CANDIDATE">{{'kanefwApp.FileStatus.CANDIDATE' | translate}}</option>
+                        <option value="FINAL">{{'kanefwApp.FileStatus.FINAL' | translate}}</option>
+                    </select>
+                    <div [hidden]="!(editForm.controls.status?.dirty && editForm.controls.status?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.status?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.hardwareFile.category" for="field_category">Category</label>
+                    <select class="form-control" name="category" [(ngModel)]="hardwareFile.category" id="field_category"  required>
+                        <option value="FIRMWARE">{{'kanefwApp.FileCategory.FIRMWARE' | translate}}</option>
+                        <option value="DATASHEET">{{'kanefwApp.FileCategory.DATASHEET' | translate}}</option>
+                        <option value="DESIGN">{{'kanefwApp.FileCategory.DESIGN' | translate}}</option>
+                        <option value="MANUAL">{{'kanefwApp.FileCategory.MANUAL' | translate}}</option>
+                    </select>
+                    <div [hidden]="!(editForm.controls.category?.dirty && editForm.controls.category?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.category?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.hardwareFile.content" for="field_content">Content</label>
+                    <select class="form-control" id="field_content" name="content" [(ngModel)]="hardwareFile.content">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="contentOption.id === hardwareFile.content?.id ? hardwareFile.content : contentOption" *ngFor="let contentOption of contents; trackBy: trackContentById">{{contentOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.hardwareFile.hardware" for="field_hardware">Hardware</label>
+                    <select class="form-control" id="field_hardware" name="hardware" [(ngModel)]="hardwareFile.hardware"  required>
+                        <option *ngIf="!editForm.value.hardware" [ngValue]="null" selected></option>
+                        <option [ngValue]="hardwareOption.id === hardwareFile.hardware?.id ? hardwareFile.hardware : hardwareOption" *ngFor="let hardwareOption of hardwares; trackBy: trackHardwareById">{{hardwareOption.id}}</option>
+                    </select>
+                </div>
+                <div [hidden]="!(editForm.controls.hardware?.dirty && editForm.controls.hardware?.invalid)">
+                    <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.hardware?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

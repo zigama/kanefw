@@ -1,0 +1,72 @@
+{
+    "name": "DeviceHealth",
+    "fields": [
+        {
+            "fieldName": "timeStamp",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "rssi",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "locationLat",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "locationLong",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "devicePhoneNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "deviceCarrier",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "printerStatus",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "updateAvailable",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "updateRequired",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "newAppVersion",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "otaServerIp",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "newAppFileName",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "device",
+            "otherEntityRelationshipName": "deviceHealth",
+            "relationshipValidateRules": "required",
+            "relationshipName": "device",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190325132751",
+    "entityTableName": "device_health",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

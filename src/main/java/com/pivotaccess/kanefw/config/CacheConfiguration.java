@@ -38,6 +38,17 @@ public class CacheConfiguration {
             cm.createCache(com.pivotaccess.kanefw.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(com.pivotaccess.kanefw.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(com.pivotaccess.kanefw.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(com.pivotaccess.kanefw.domain.Hardware.class.getName(), jcacheConfiguration);
+            cm.createCache(com.pivotaccess.kanefw.domain.Hardware.class.getName() + ".hardwareFiles", jcacheConfiguration);
+            cm.createCache(com.pivotaccess.kanefw.domain.HardwareFile.class.getName(), jcacheConfiguration);
+            cm.createCache(com.pivotaccess.kanefw.domain.Content.class.getName(), jcacheConfiguration);
+            cm.createCache(com.pivotaccess.kanefw.domain.Device.class.getName(), jcacheConfiguration);
+            cm.createCache(com.pivotaccess.kanefw.domain.Device.class.getName() + ".deviceHealths", jcacheConfiguration);
+            cm.createCache(com.pivotaccess.kanefw.domain.Device.class.getName() + ".transactions", jcacheConfiguration);
+            cm.createCache(com.pivotaccess.kanefw.domain.DeviceHealth.class.getName(), jcacheConfiguration);
+            cm.createCache(com.pivotaccess.kanefw.domain.Customer.class.getName(), jcacheConfiguration);
+            cm.createCache(com.pivotaccess.kanefw.domain.Customer.class.getName() + ".transactions", jcacheConfiguration);
+            cm.createCache(com.pivotaccess.kanefw.domain.Transaction.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

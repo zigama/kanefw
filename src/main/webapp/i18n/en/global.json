@@ -8,6 +8,13 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entities",
+                "hardware": "Hardware",
+                "hardwareFile": "Hardware File",
+                "content": "Content",
+                "device": "Device",
+                "deviceHealth": "Device Health",
+                "customer": "Customer",
+                "transaction": "Transaction",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

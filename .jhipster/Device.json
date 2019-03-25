@@ -1,0 +1,36 @@
+{
+    "name": "Device",
+    "fields": [
+        {
+            "fieldName": "serialNumber",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "unique"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "deviceHealth",
+            "otherEntityRelationshipName": "device",
+            "relationshipName": "deviceHealth"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "transaction",
+            "otherEntityRelationshipName": "device",
+            "relationshipName": "transaction"
+        }
+    ],
+    "changelogDate": "20190325132750",
+    "entityTableName": "device",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

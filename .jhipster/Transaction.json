@@ -1,0 +1,40 @@
+{
+    "name": "Transaction",
+    "fields": [
+        {
+            "fieldName": "timeStamp",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "transactionAmount",
+            "fieldType": "Double"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "device",
+            "otherEntityRelationshipName": "transaction",
+            "relationshipValidateRules": "required",
+            "relationshipName": "device",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "customer",
+            "otherEntityRelationshipName": "transaction",
+            "relationshipValidateRules": "required",
+            "relationshipName": "customer",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190325132753",
+    "entityTableName": "transaction",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

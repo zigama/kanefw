@@ -1,0 +1,31 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="hardware">
+            <h2><span jhiTranslate="kanefwApp.hardware.detail.title">Hardware</span> {{hardware.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="kanefwApp.hardware.model">Model</span></dt>
+                <dd>
+                    <span>{{hardware.model}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.hardware.serie">Serie</span></dt>
+                <dd>
+                    <span>{{hardware.serie}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/hardware', hardware.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

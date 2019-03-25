@@ -1,0 +1,99 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-device-health-heading" jhiTranslate="kanefwApp.deviceHealth.home.createOrEditLabel">Create or edit a Device Health</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!deviceHealth.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="deviceHealth.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.deviceHealth.timeStamp" for="field_timeStamp">Time Stamp</label>
+                    <div class="d-flex">
+                        <input id="field_timeStamp" type="datetime-local" class="form-control" name="timeStamp" [(ngModel)]="timeStamp" placeholder="YYYY-MM-DD HH:mm"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.deviceHealth.rssi" for="field_rssi">Rssi</label>
+                    <input type="text" class="form-control" name="rssi" id="field_rssi"
+                        [(ngModel)]="deviceHealth.rssi" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.deviceHealth.locationLat" for="field_locationLat">Location Lat</label>
+                    <input type="text" class="form-control" name="locationLat" id="field_locationLat"
+                        [(ngModel)]="deviceHealth.locationLat" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.deviceHealth.locationLong" for="field_locationLong">Location Long</label>
+                    <input type="text" class="form-control" name="locationLong" id="field_locationLong"
+                        [(ngModel)]="deviceHealth.locationLong" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.deviceHealth.devicePhoneNumber" for="field_devicePhoneNumber">Device Phone Number</label>
+                    <input type="text" class="form-control" name="devicePhoneNumber" id="field_devicePhoneNumber"
+                        [(ngModel)]="deviceHealth.devicePhoneNumber" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.deviceHealth.deviceCarrier" for="field_deviceCarrier">Device Carrier</label>
+                    <input type="text" class="form-control" name="deviceCarrier" id="field_deviceCarrier"
+                        [(ngModel)]="deviceHealth.deviceCarrier" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.deviceHealth.printerStatus" for="field_printerStatus">Printer Status</label>
+                    <input type="text" class="form-control" name="printerStatus" id="field_printerStatus"
+                        [(ngModel)]="deviceHealth.printerStatus" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.deviceHealth.updateAvailable" for="field_updateAvailable">Update Available</label>
+                    <input type="checkbox" class="form-control" name="updateAvailable" id="field_updateAvailable"
+                        [(ngModel)]="deviceHealth.updateAvailable" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.deviceHealth.updateRequired" for="field_updateRequired">Update Required</label>
+                    <input type="checkbox" class="form-control" name="updateRequired" id="field_updateRequired"
+                        [(ngModel)]="deviceHealth.updateRequired" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.deviceHealth.newAppVersion" for="field_newAppVersion">New App Version</label>
+                    <input type="text" class="form-control" name="newAppVersion" id="field_newAppVersion"
+                        [(ngModel)]="deviceHealth.newAppVersion" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.deviceHealth.otaServerIp" for="field_otaServerIp">Ota Server Ip</label>
+                    <input type="text" class="form-control" name="otaServerIp" id="field_otaServerIp"
+                        [(ngModel)]="deviceHealth.otaServerIp" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.deviceHealth.newAppFileName" for="field_newAppFileName">New App File Name</label>
+                    <input type="text" class="form-control" name="newAppFileName" id="field_newAppFileName"
+                        [(ngModel)]="deviceHealth.newAppFileName" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.deviceHealth.device" for="field_device">Device</label>
+                    <select class="form-control" id="field_device" name="device" [(ngModel)]="deviceHealth.device"  required>
+                        <option *ngIf="!editForm.value.device" [ngValue]="null" selected></option>
+                        <option [ngValue]="deviceOption.id === deviceHealth.device?.id ? deviceHealth.device : deviceOption" *ngFor="let deviceOption of devices; trackBy: trackDeviceById">{{deviceOption.id}}</option>
+                    </select>
+                </div>
+                <div [hidden]="!(editForm.controls.device?.dirty && editForm.controls.device?.invalid)">
+                    <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.device?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+{
+    "kanefwApp": {
+        "deviceHealth": {
+            "home": {
+                "title": "Device Healths",
+                "createLabel": "Create a new Device Health",
+                "createOrEditLabel": "Create or edit a Device Health",
+                "search": "Search for Device Health"
+            },
+            "created": "A new Device Health is created with identifier {{ param }}",
+            "updated": "A Device Health is updated with identifier {{ param }}",
+            "deleted": "A Device Health is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Device Health {{ id }}?"
+            },
+            "detail": {
+                "title": "Device Health"
+            },
+            "timeStamp": "Time Stamp",
+            "rssi": "Rssi",
+            "locationLat": "Location Lat",
+            "locationLong": "Location Long",
+            "devicePhoneNumber": "Device Phone Number",
+            "deviceCarrier": "Device Carrier",
+            "printerStatus": "Printer Status",
+            "updateAvailable": "Update Available",
+            "updateRequired": "Update Required",
+            "newAppVersion": "New App Version",
+            "otaServerIp": "Ota Server Ip",
+            "newAppFileName": "New App File Name",
+            "device": "Device"
+        }
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "name": "Content",
+    "fields": [
+        {
+            "fieldName": "data",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "hardwareFile",
+            "otherEntityRelationshipName": "content",
+            "relationshipValidateRules": "required",
+            "relationshipName": "hardwareFile",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20190325132749",
+    "entityTableName": "content",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

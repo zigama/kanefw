@@ -1,0 +1,63 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="hardwareFile">
+            <h2><span jhiTranslate="kanefwApp.hardwareFile.detail.title">Hardware File</span> {{hardwareFile.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="kanefwApp.hardwareFile.title">Title</span></dt>
+                <dd>
+                    <span>{{hardwareFile.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.hardwareFile.size">Size</span></dt>
+                <dd>
+                    <span>{{hardwareFile.size}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.hardwareFile.mimeType">Mime Type</span></dt>
+                <dd>
+                    <span>{{hardwareFile.mimeType}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.hardwareFile.dateUploaded">Date Uploaded</span></dt>
+                <dd>
+                    <span>{{hardwareFile.dateUploaded}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.hardwareFile.version">Version</span></dt>
+                <dd>
+                    <span>{{hardwareFile.version}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.hardwareFile.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'kanefwApp.FileStatus.' + hardwareFile.status}}">{{hardwareFile.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.hardwareFile.category">Category</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'kanefwApp.FileCategory.' + hardwareFile.category}}">{{hardwareFile.category}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.hardwareFile.content">Content</span></dt>
+                <dd>
+                    <div *ngIf="hardwareFile.content">
+                        <a [routerLink]="['/content', hardwareFile.content?.id, 'view']">{{hardwareFile.content?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.hardwareFile.hardware">Hardware</span></dt>
+                <dd>
+                    <div *ngIf="hardwareFile.hardware">
+                        <a [routerLink]="['/hardware', hardwareFile.hardware?.id, 'view']">{{hardwareFile.hardware?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/hardware-file', hardwareFile.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity HardwareFile.
+    -->
+    <changeSet id="20190325132748-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="content_id"
+                                 baseTableName="hardware_file"
+                                 constraintName="fk_hardware_file_content_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="content"/>
+
+        <addForeignKeyConstraint baseColumnNames="hardware_id"
+                                 baseTableName="hardware_file"
+                                 constraintName="fk_hardware_file_hardware_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hardware"/>
+
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,30 @@
+{
+    "kanefwApp": {
+        "hardwareFile": {
+            "home": {
+                "title": "Hardware Files",
+                "createLabel": "Create a new Hardware File",
+                "createOrEditLabel": "Create or edit a Hardware File",
+                "search": "Search for Hardware File"
+            },
+            "created": "A new Hardware File is created with identifier {{ param }}",
+            "updated": "A Hardware File is updated with identifier {{ param }}",
+            "deleted": "A Hardware File is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Hardware File {{ id }}?"
+            },
+            "detail": {
+                "title": "Hardware File"
+            },
+            "title": "Title",
+            "size": "Size",
+            "mimeType": "Mime Type",
+            "dateUploaded": "Date Uploaded",
+            "version": "Version",
+            "status": "Status",
+            "category": "Category",
+            "content": "Content",
+            "hardware": "Hardware"
+        }
+    }
+}
