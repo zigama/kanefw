@@ -1,0 +1,11 @@
+{
+    "kanefwApp": {
+        "FileStatus": {
+            "null": "",
+            "ALPHA": "ALPHA",
+            "BETA": "BETA",
+            "CANDIDATE": "CANDIDATE",
+            "FINAL": "FINAL"
+        }
+    }
+}

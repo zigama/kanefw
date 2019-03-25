@@ -1,0 +1,9 @@
+{
+    "kanefwApp": {
+        "IDType": {
+            "null": "",
+            "NATIONALID": "NATIONALID",
+            "PASSPORT": "PASSPORT"
+        }
+    }
+}

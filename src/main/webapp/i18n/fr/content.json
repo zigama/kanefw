@@ -1,0 +1,23 @@
+{
+    "kanefwApp": {
+        "content": {
+            "home": {
+                "title": "Contents",
+                "createLabel": "Créer un nouveau Content",
+                "createOrEditLabel": "Créer ou éditer un Content",
+                "search": "Recherche pour Content"
+            },
+            "created": "Un nouveau Content a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Content avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Content avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Content {{ id }} ?"
+            },
+            "detail": {
+                "title": "Content"
+            },
+            "data": "Data",
+            "hardwareFile": "Hardware File"
+        }
+    }
+}

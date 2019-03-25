@@ -1,0 +1,80 @@
+
+enum FileCategory{
+	FIRMWARE, DATASHEET, DESIGN, MANUAL
+}
+
+enum FileStatus{
+	ALPHA, BETA, CANDIDATE, FINAL
+}
+
+enum IDType{
+	NATIONALID, PASSPORT
+}
+
+entity Hardware{
+	model String required unique,
+	serie String
+}
+
+entity HardwareFile {
+  title String required,
+  size Long required,
+  mimeType String,
+  dateUploaded LocalDate required,
+  version Integer required,
+  status FileStatus required,
+  category FileCategory required
+  
+  
+}
+
+entity Content {
+  data Blob required
+}
+
+entity Device{
+	serialNumber String required unique
+}
+
+entity DeviceHealth{
+	timeStamp Instant,
+	rssi String,
+	locationLat String,
+	locationLong String,
+	devicePhoneNumber String,
+	deviceCarrier String,
+	printerStatus String,
+    updateAvailable Boolean,
+	updateRequired Boolean,
+	newAppVersion String,
+	otaServerIp String,
+	newAppFileName String
+}
+
+entity Customer{
+	idNumber String required unique,
+    idType IDType required,
+	firstName String required,
+	middleName String,
+	lastName String required,
+	currentBalance Double required,
+    accountNumber String required,
+	pin String required
+}
+
+entity Transaction{
+    timeStamp Instant,
+    transactionAmount Double
+}
+
+
+relationship OneToOne {
+  HardwareFile{content} to Content{hardwareFile(id) required}
+}
+
+relationship OneToMany {
+  Hardware{hardwareFile} to HardwareFile{hardware(id) required},
+  Device{deviceHealth} to DeviceHealth{device(id) required},
+  Device{transaction} to Transaction{device(id) required},
+  Customer{transaction} to Transaction{customer(id) required}
+}

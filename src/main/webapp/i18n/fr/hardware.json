@@ -1,0 +1,24 @@
+{
+    "kanefwApp": {
+        "hardware": {
+            "home": {
+                "title": "Hardwares",
+                "createLabel": "Créer un nouveau Hardware",
+                "createOrEditLabel": "Créer ou éditer un Hardware",
+                "search": "Recherche pour Hardware"
+            },
+            "created": "Un nouveau Hardware a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Hardware avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Hardware avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Hardware {{ id }} ?"
+            },
+            "detail": {
+                "title": "Hardware"
+            },
+            "model": "Model",
+            "serie": "Serie",
+            "hardwareFile": "Hardware File"
+        }
+    }
+}

@@ -1,0 +1,77 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="deviceHealth">
+            <h2><span jhiTranslate="kanefwApp.deviceHealth.detail.title">Device Health</span> {{deviceHealth.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="kanefwApp.deviceHealth.timeStamp">Time Stamp</span></dt>
+                <dd>
+                    <span>{{deviceHealth.timeStamp}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.deviceHealth.rssi">Rssi</span></dt>
+                <dd>
+                    <span>{{deviceHealth.rssi}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.deviceHealth.locationLat">Location Lat</span></dt>
+                <dd>
+                    <span>{{deviceHealth.locationLat}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.deviceHealth.locationLong">Location Long</span></dt>
+                <dd>
+                    <span>{{deviceHealth.locationLong}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.deviceHealth.devicePhoneNumber">Device Phone Number</span></dt>
+                <dd>
+                    <span>{{deviceHealth.devicePhoneNumber}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.deviceHealth.deviceCarrier">Device Carrier</span></dt>
+                <dd>
+                    <span>{{deviceHealth.deviceCarrier}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.deviceHealth.printerStatus">Printer Status</span></dt>
+                <dd>
+                    <span>{{deviceHealth.printerStatus}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.deviceHealth.updateAvailable">Update Available</span></dt>
+                <dd>
+                    <span>{{deviceHealth.updateAvailable}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.deviceHealth.updateRequired">Update Required</span></dt>
+                <dd>
+                    <span>{{deviceHealth.updateRequired}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.deviceHealth.newAppVersion">New App Version</span></dt>
+                <dd>
+                    <span>{{deviceHealth.newAppVersion}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.deviceHealth.otaServerIp">Ota Server Ip</span></dt>
+                <dd>
+                    <span>{{deviceHealth.otaServerIp}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.deviceHealth.newAppFileName">New App File Name</span></dt>
+                <dd>
+                    <span>{{deviceHealth.newAppFileName}}</span>
+                </dd>
+                <dt><span jhiTranslate="kanefwApp.deviceHealth.device">Device</span></dt>
+                <dd>
+                    <div *ngIf="deviceHealth.device">
+                        <a [routerLink]="['/device', deviceHealth.device?.id, 'view']">{{deviceHealth.device?.id}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/device-health', deviceHealth.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

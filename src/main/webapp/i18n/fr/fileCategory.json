@@ -1,0 +1,11 @@
+{
+    "kanefwApp": {
+        "FileCategory": {
+            "null": "",
+            "FIRMWARE": "FIRMWARE",
+            "DATASHEET": "DATASHEET",
+            "DESIGN": "DESIGN",
+            "MANUAL": "MANUAL"
+        }
+    }
+}
