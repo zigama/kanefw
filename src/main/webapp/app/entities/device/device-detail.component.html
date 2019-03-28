@@ -9,6 +9,12 @@
                 <dd>
                     <span>{{device.serialNumber}}</span>
                 </dd>
+                <dt><span jhiTranslate="kanefwApp.device.hardware">Hardware</span></dt>
+                <dd>
+                    <div *ngIf="device.hardware">
+                        <a [routerLink]="['/hardware', device.hardware?.id, 'view']">{{device.hardware?.id}}</a>
+                    </div>
+                </dd>
             </dl>
 
             <button type="submit"

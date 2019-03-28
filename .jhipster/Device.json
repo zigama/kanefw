@@ -22,6 +22,14 @@
             "otherEntityName": "transaction",
             "otherEntityRelationshipName": "device",
             "relationshipName": "transaction"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "hardware",
+            "otherEntityRelationshipName": "device",
+            "relationshipValidateRules": "required",
+            "relationshipName": "hardware",
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190325132750",
