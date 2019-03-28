@@ -2,6 +2,7 @@ package com.pivotaccess.kanefw.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -39,6 +40,11 @@ public class Device implements Serializable {
     @OneToMany(mappedBy = "device")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Transaction> transactions = new HashSet<>();
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties("devices")
+    private Hardware hardware;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -109,6 +115,19 @@ public class Device implements Serializable {
 
     public void setTransactions(Set<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+    public Hardware getHardware() {
+        return hardware;
+    }
+
+    public Device hardware(Hardware hardware) {
+        this.hardware = hardware;
+        return this;
+    }
+
+    public void setHardware(Hardware hardware) {
+        this.hardware = hardware;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

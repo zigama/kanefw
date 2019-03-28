@@ -3,6 +3,7 @@ package com.pivotaccess.kanefw.web.rest;
 import com.pivotaccess.kanefw.KanefwApp;
 
 import com.pivotaccess.kanefw.domain.Device;
+import com.pivotaccess.kanefw.domain.Hardware;
 import com.pivotaccess.kanefw.repository.DeviceRepository;
 import com.pivotaccess.kanefw.repository.search.DeviceSearchRepository;
 import com.pivotaccess.kanefw.web.rest.errors.ExceptionTranslator;
@@ -98,6 +99,11 @@ public class DeviceResourceIntTest {
     public static Device createEntity(EntityManager em) {
         Device device = new Device()
             .serialNumber(DEFAULT_SERIAL_NUMBER);
+        // Add required entity
+        Hardware hardware = HardwareResourceIntTest.createEntity(em);
+        em.persist(hardware);
+        em.flush();
+        device.setHardware(hardware);
         return device;
     }
 

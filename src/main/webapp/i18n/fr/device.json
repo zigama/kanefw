@@ -18,7 +18,8 @@
             },
             "serialNumber": "Serial Number",
             "deviceHealth": "Device Health",
-            "transaction": "Transaction"
+            "transaction": "Transaction",
+            "hardware": "Hardware"
         }
     }
 }

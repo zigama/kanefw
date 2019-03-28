@@ -18,7 +18,8 @@
             },
             "model": "Model",
             "serie": "Serie",
-            "hardwareFile": "Hardware File"
+            "hardwareFile": "Hardware File",
+            "device": "Device"
         }
     }
 }

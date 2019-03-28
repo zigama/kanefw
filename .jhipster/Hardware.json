@@ -20,6 +20,12 @@
             "otherEntityName": "hardwareFile",
             "otherEntityRelationshipName": "hardware",
             "relationshipName": "hardwareFile"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "device",
+            "otherEntityRelationshipName": "hardware",
+            "relationshipName": "device"
         }
     ],
     "changelogDate": "20190325132747",

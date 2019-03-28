@@ -39,6 +39,9 @@ public class Hardware implements Serializable {
     @OneToMany(mappedBy = "hardware", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<HardwareFile> hardwareFiles = new HashSet<>();
+    @OneToMany(mappedBy = "hardware")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Device> devices = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -97,6 +100,31 @@ public class Hardware implements Serializable {
 
     public void setHardwareFiles(Set<HardwareFile> hardwareFiles) {
         this.hardwareFiles = hardwareFiles;
+    }
+
+    public Set<Device> getDevices() {
+        return devices;
+    }
+
+    public Hardware devices(Set<Device> devices) {
+        this.devices = devices;
+        return this;
+    }
+
+    public Hardware addDevice(Device device) {
+        this.devices.add(device);
+        device.setHardware(this);
+        return this;
+    }
+
+    public Hardware removeDevice(Device device) {
+        this.devices.remove(device);
+        device.setHardware(null);
+        return this;
+    }
+
+    public void setDevices(Set<Device> devices) {
+        this.devices = devices;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
