@@ -36,7 +36,7 @@ public class Hardware implements Serializable {
     @Column(name = "serie")
     private String serie;
 
-    @OneToMany(mappedBy = "hardware")
+    @OneToMany(mappedBy = "hardware", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<HardwareFile> hardwareFiles = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

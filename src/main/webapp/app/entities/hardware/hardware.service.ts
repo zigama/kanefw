@@ -12,12 +12,27 @@ type EntityArrayResponseType = HttpResponse<IHardware[]>;
 @Injectable({ providedIn: 'root' })
 export class HardwareService {
     public resourceUrl = SERVER_API_URL + 'api/hardwares';
+    public resourceUrlHF = SERVER_API_URL + 'api/hardwares/files';
     public resourceSearchUrl = SERVER_API_URL + 'api/_search/hardwares';
 
     constructor(protected http: HttpClient) {}
 
     create(hardware: IHardware): Observable<EntityResponseType> {
         return this.http.post<IHardware>(this.resourceUrl, hardware, { observe: 'response' });
+    }
+
+    createHF(hardware: IHardware, files: FileList): Observable<EntityResponseType> {
+        const hardwareMultipartFormParam = 'hardware';
+        const filesMultipartFormParam = 'files';
+        const formData: FormData = new FormData();
+        const hardwareAsJsonBlob: Blob = new Blob([JSON.stringify(hardware)], { type: 'application/json' });
+
+        formData.append(hardwareMultipartFormParam, hardwareAsJsonBlob);
+        for (let i = 0; i < files.length; i++) {
+            formData.append(filesMultipartFormParam, files.item(i));
+        }
+
+        return this.http.post<IHardware>(this.resourceUrlHF, formData, { observe: 'response' });
     }
 
     update(hardware: IHardware): Observable<EntityResponseType> {
