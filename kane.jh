@@ -74,6 +74,7 @@ relationship OneToOne {
 
 relationship OneToMany {
   Hardware{hardwareFile} to HardwareFile{hardware(id) required},
+  Hardware{device} to Device{hardware(id) required},
   Device{deviceHealth} to DeviceHealth{device(id) required},
   Device{transaction} to Transaction{device(id) required},
   Customer{transaction} to Transaction{customer(id) required}
