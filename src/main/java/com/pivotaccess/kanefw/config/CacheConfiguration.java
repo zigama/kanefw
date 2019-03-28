@@ -49,6 +49,7 @@ public class CacheConfiguration {
             cm.createCache(com.pivotaccess.kanefw.domain.Customer.class.getName(), jcacheConfiguration);
             cm.createCache(com.pivotaccess.kanefw.domain.Customer.class.getName() + ".transactions", jcacheConfiguration);
             cm.createCache(com.pivotaccess.kanefw.domain.Transaction.class.getName(), jcacheConfiguration);
+            cm.createCache(com.pivotaccess.kanefw.domain.Hardware.class.getName() + ".devices", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

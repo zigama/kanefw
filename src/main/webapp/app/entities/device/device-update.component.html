@@ -21,6 +21,19 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="kanefwApp.device.hardware" for="field_hardware">Hardware</label>
+                    <select class="form-control" id="field_hardware" name="hardware" [(ngModel)]="device.hardware"  required>
+                        <option *ngIf="!editForm.value.hardware" [ngValue]="null" selected></option>
+                        <option [ngValue]="hardwareOption.id === device.hardware?.id ? device.hardware : hardwareOption" *ngFor="let hardwareOption of hardwares; trackBy: trackHardwareById">{{hardwareOption.id}}</option>
+                    </select>
+                </div>
+                <div [hidden]="!(editForm.controls.hardware?.dirty && editForm.controls.hardware?.invalid)">
+                    <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.hardware?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
