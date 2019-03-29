@@ -5,6 +5,7 @@ import com.pivotaccess.kanefw.KanefwApp;
 import com.pivotaccess.kanefw.domain.Hardware;
 import com.pivotaccess.kanefw.repository.HardwareRepository;
 import com.pivotaccess.kanefw.repository.search.HardwareSearchRepository;
+import com.pivotaccess.kanefw.service.mapper.HardwareFileMapper;
 import com.pivotaccess.kanefw.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -79,11 +80,16 @@ public class HardwareResourceIntTest {
     private MockMvc restHardwareMockMvc;
 
     private Hardware hardware;
+    
+    @Autowired
+    private HardwareFileMapper hardwareFileMapper;
+
+
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final HardwareResource hardwareResource = new HardwareResource(hardwareRepository, mockHardwareSearchRepository);
+        final HardwareResource hardwareResource = new HardwareResource(hardwareRepository, mockHardwareSearchRepository, hardwareFileMapper);
         this.restHardwareMockMvc = MockMvcBuilders.standaloneSetup(hardwareResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

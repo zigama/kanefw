@@ -13,6 +13,7 @@ import { HardwareService } from './hardware.service';
 export class HardwareUpdateComponent implements OnInit {
     hardware: IHardware;
     isSaving: boolean;
+    files: FileList;
 
     constructor(protected hardwareService: HardwareService, protected activatedRoute: ActivatedRoute) {}
 
@@ -27,12 +28,16 @@ export class HardwareUpdateComponent implements OnInit {
         window.history.back();
     }
 
+    handleFileInput(files: FileList) {
+        this.files = files;
+    }
+
     save() {
         this.isSaving = true;
         if (this.hardware.id !== undefined) {
             this.subscribeToSaveResponse(this.hardwareService.update(this.hardware));
         } else {
-            this.subscribeToSaveResponse(this.hardwareService.create(this.hardware));
+            this.subscribeToSaveResponse(this.hardwareService.createHF(this.hardware, this.files));
         }
     }
 
