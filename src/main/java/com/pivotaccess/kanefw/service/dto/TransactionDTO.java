@@ -6,7 +6,7 @@ import com.pivotaccess.kanefw.domain.Transaction;
 
 public class TransactionDTO {
 	
-	private String timestamp;
+	private String timeStamp;
 	
 	@Size(max = 50)
     private String clientFirstName;
@@ -26,12 +26,12 @@ public class TransactionDTO {
 	
 	
 
-	public String getTimestamp() {
-		return timestamp;
+	public String getTimeStamp() {
+		return timeStamp;
 	}
 
-	public void setTimestamp(String timestamp) {
-		this.timestamp = timestamp;
+	public void setTimeStamp(String timestamp) {
+		this.timeStamp = timestamp;
 	}
 
 	public String getClientFirstName() {
@@ -90,7 +90,7 @@ public class TransactionDTO {
 		// TODO Auto-generated constructor stub
 		
 		this.deviceId = String.valueOf(transaction.getDevice().getId());
-		this.timestamp = String.valueOf(transaction.getTimeStamp().getEpochSecond());
+		this.timeStamp = String.valueOf(transaction.getTimeStamp().getEpochSecond());
 		this.clientFirstName = transaction.getCustomer().getFirstName();
 		this.clientLastName = transaction.getCustomer().getLastName();
 		this.clientAccountNumber = transaction.getCustomer().getAccountNumber();

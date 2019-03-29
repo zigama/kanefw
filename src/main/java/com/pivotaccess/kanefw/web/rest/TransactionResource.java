@@ -84,7 +84,8 @@ public class TransactionResource {
     		@RequestParam("clientLastName") String clientLastName,
     		@RequestParam("accountNumber") String clientAccountNumber,
     		@RequestParam("clientPinNumber") String clientPinNumber,
-    		@RequestParam("transactionAmount") String transactionAmount ) throws URISyntaxException {
+    		@RequestParam("transactionAmount") String transactionAmount
+    		) throws URISyntaxException {
         
     	Transaction transaction = new Transaction();
     	Optional<Device> device = deviceRepository.findById(Long.parseLong(deviceId));
