@@ -7,7 +7,7 @@ import { take, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { HardwareFileService } from 'app/entities/hardware-file/hardware-file.service';
-import { IHardwareFile, HardwareFile, FileStatus, FileCategory } from 'app/shared/model/hardware-file.model';
+import { IHardwareFile, HardwareFile, FileCategory } from 'app/shared/model/hardware-file.model';
 
 describe('Service Tests', () => {
     describe('HardwareFile Service', () => {
@@ -25,7 +25,7 @@ describe('Service Tests', () => {
             httpMock = injector.get(HttpTestingController);
             currentDate = moment();
 
-            elemDefault = new HardwareFile(0, 'AAAAAAA', 0, 'AAAAAAA', currentDate, 0, FileStatus.ALPHA, FileCategory.FIRMWARE);
+            elemDefault = new HardwareFile(0, 'AAAAAAA', 0, 'AAAAAAA', currentDate, 'AAAAAAA', FileCategory.FIRMWARE);
         });
 
         describe('Service methods', async () => {
@@ -74,8 +74,7 @@ describe('Service Tests', () => {
                         size: 1,
                         mimeType: 'BBBBBB',
                         dateUploaded: currentDate.format(DATE_FORMAT),
-                        version: 1,
-                        status: 'BBBBBB',
+                        version: 'BBBBBB',
                         category: 'BBBBBB'
                     },
                     elemDefault
@@ -102,8 +101,7 @@ describe('Service Tests', () => {
                         size: 1,
                         mimeType: 'BBBBBB',
                         dateUploaded: currentDate.format(DATE_FORMAT),
-                        version: 1,
-                        status: 'BBBBBB',
+                        version: 'BBBBBB',
                         category: 'BBBBBB'
                     },
                     elemDefault

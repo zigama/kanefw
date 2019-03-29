@@ -35,7 +35,6 @@
             <th><span jhiTranslate="kanefwApp.hardwareFile.mimeType">Mime Type</span></th>
             <th><span jhiTranslate="kanefwApp.hardwareFile.dateUploaded">Date Uploaded</span></th>
             <th><span jhiTranslate="kanefwApp.hardwareFile.version">Version</span></th>
-            <th><span jhiTranslate="kanefwApp.hardwareFile.status">Status</span></th>
             <th><span jhiTranslate="kanefwApp.hardwareFile.category">Category</span></th>
             <th><span jhiTranslate="kanefwApp.hardwareFile.content">Content</span></th>
             <th><span jhiTranslate="kanefwApp.hardwareFile.hardware">Hardware</span></th>
@@ -50,7 +49,6 @@
                 <td>{{hardwareFile.mimeType}}</td>
                 <td>{{hardwareFile.dateUploaded | date:'mediumDate'}}</td>
                 <td>{{hardwareFile.version}}</td>
-                <td jhiTranslate="{{'kanefwApp.FileStatus.' + hardwareFile.status}}">{{hardwareFile.status}}</td>
                 <td jhiTranslate="{{'kanefwApp.FileCategory.' + hardwareFile.category}}">{{hardwareFile.category}}</td>
                 <td>
                     <div *ngIf="hardwareFile.content">

@@ -58,30 +58,11 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="kanefwApp.hardwareFile.version" for="field_version">Version</label>
-                    <input type="number" class="form-control" name="version" id="field_version"
+                    <input type="text" class="form-control" name="version" id="field_version"
                         [(ngModel)]="hardwareFile.version" required/>
                     <div [hidden]="!(editForm.controls.version?.dirty && editForm.controls.version?.invalid)">
                         <small class="form-text text-danger"
                         [hidden]="!editForm.controls.version?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.version?.errors?.number" jhiTranslate="entity.validation.number">
-                            This field should be a number.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="kanefwApp.hardwareFile.status" for="field_status">Status</label>
-                    <select class="form-control" name="status" [(ngModel)]="hardwareFile.status" id="field_status"  required>
-                        <option value="ALPHA">{{'kanefwApp.FileStatus.ALPHA' | translate}}</option>
-                        <option value="BETA">{{'kanefwApp.FileStatus.BETA' | translate}}</option>
-                        <option value="CANDIDATE">{{'kanefwApp.FileStatus.CANDIDATE' | translate}}</option>
-                        <option value="FINAL">{{'kanefwApp.FileStatus.FINAL' | translate}}</option>
-                    </select>
-                    <div [hidden]="!(editForm.controls.status?.dirty && editForm.controls.status?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.status?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
                         </small>
                     </div>

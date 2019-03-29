@@ -3,10 +3,6 @@ enum FileCategory{
 	FIRMWARE, DATASHEET, DESIGN, MANUAL
 }
 
-enum FileStatus{
-	ALPHA, BETA, CANDIDATE, FINAL
-}
-
 enum IDType{
 	NATIONALID, PASSPORT
 }
@@ -21,10 +17,8 @@ entity HardwareFile {
   size Long required,
   mimeType String,
   dateUploaded LocalDate required,
-  version Integer required,
-  status FileStatus required,
+  version String required,
   category FileCategory required
-  
   
 }
 

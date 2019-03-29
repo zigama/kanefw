@@ -28,15 +28,7 @@
         },
         {
             "fieldName": "version",
-            "fieldType": "Integer",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "status",
-            "fieldType": "FileStatus",
-            "fieldValues": "ALPHA,BETA,CANDIDATE,FINAL",
+            "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]

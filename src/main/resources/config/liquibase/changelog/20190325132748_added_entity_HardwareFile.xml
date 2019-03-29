@@ -38,11 +38,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="version" type="integer">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="status" type="varchar(255)">
+            <column name="version" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
