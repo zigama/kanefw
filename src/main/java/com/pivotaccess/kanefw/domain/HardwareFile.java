@@ -13,8 +13,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import com.pivotaccess.kanefw.domain.enumeration.FileStatus;
-
 import com.pivotaccess.kanefw.domain.enumeration.FileCategory;
 
 /**
@@ -49,12 +47,7 @@ public class HardwareFile implements Serializable {
 
     @NotNull
     @Column(name = "version", nullable = false)
-    private Integer version;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private FileStatus status;
+    private String version;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -131,30 +124,17 @@ public class HardwareFile implements Serializable {
         this.dateUploaded = dateUploaded;
     }
 
-    public Integer getVersion() {
+    public String getVersion() {
         return version;
     }
 
-    public HardwareFile version(Integer version) {
+    public HardwareFile version(String version) {
         this.version = version;
         return this;
     }
 
-    public void setVersion(Integer version) {
+    public void setVersion(String version) {
         this.version = version;
-    }
-
-    public FileStatus getStatus() {
-        return status;
-    }
-
-    public HardwareFile status(FileStatus status) {
-        this.status = status;
-        return this;
-    }
-
-    public void setStatus(FileStatus status) {
-        this.status = status;
     }
 
     public FileCategory getCategory() {
@@ -225,8 +205,7 @@ public class HardwareFile implements Serializable {
             ", size=" + getSize() +
             ", mimeType='" + getMimeType() + "'" +
             ", dateUploaded='" + getDateUploaded() + "'" +
-            ", version=" + getVersion() +
-            ", status='" + getStatus() + "'" +
+            ", version='" + getVersion() + "'" +
             ", category='" + getCategory() + "'" +
             "}";
     }

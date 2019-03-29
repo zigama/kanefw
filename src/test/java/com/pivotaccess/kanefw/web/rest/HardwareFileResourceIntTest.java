@@ -38,7 +38,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.pivotaccess.kanefw.domain.enumeration.FileStatus;
 import com.pivotaccess.kanefw.domain.enumeration.FileCategory;
 /**
  * Test class for the HardwareFileResource REST controller.
@@ -61,11 +60,8 @@ public class HardwareFileResourceIntTest {
     private static final LocalDate DEFAULT_DATE_UPLOADED = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE_UPLOADED = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Integer DEFAULT_VERSION = 1;
-    private static final Integer UPDATED_VERSION = 2;
-
-    private static final FileStatus DEFAULT_STATUS = FileStatus.ALPHA;
-    private static final FileStatus UPDATED_STATUS = FileStatus.BETA;
+    private static final String DEFAULT_VERSION = "AAAAAAAAAA";
+    private static final String UPDATED_VERSION = "BBBBBBBBBB";
 
     private static final FileCategory DEFAULT_CATEGORY = FileCategory.FIRMWARE;
     private static final FileCategory UPDATED_CATEGORY = FileCategory.DATASHEET;
@@ -125,7 +121,6 @@ public class HardwareFileResourceIntTest {
             .mimeType(DEFAULT_MIME_TYPE)
             .dateUploaded(DEFAULT_DATE_UPLOADED)
             .version(DEFAULT_VERSION)
-            .status(DEFAULT_STATUS)
             .category(DEFAULT_CATEGORY);
         // Add required entity
         Hardware hardware = HardwareResourceIntTest.createEntity(em);
@@ -160,7 +155,6 @@ public class HardwareFileResourceIntTest {
         assertThat(testHardwareFile.getMimeType()).isEqualTo(DEFAULT_MIME_TYPE);
         assertThat(testHardwareFile.getDateUploaded()).isEqualTo(DEFAULT_DATE_UPLOADED);
         assertThat(testHardwareFile.getVersion()).isEqualTo(DEFAULT_VERSION);
-        assertThat(testHardwareFile.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testHardwareFile.getCategory()).isEqualTo(DEFAULT_CATEGORY);
 
         // Validate the HardwareFile in Elasticsearch
@@ -263,24 +257,6 @@ public class HardwareFileResourceIntTest {
 
     @Test
     @Transactional
-    public void checkStatusIsRequired() throws Exception {
-        int databaseSizeBeforeTest = hardwareFileRepository.findAll().size();
-        // set the field null
-        hardwareFile.setStatus(null);
-
-        // Create the HardwareFile, which fails.
-
-        restHardwareFileMockMvc.perform(post("/api/hardware-files")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(hardwareFile)))
-            .andExpect(status().isBadRequest());
-
-        List<HardwareFile> hardwareFileList = hardwareFileRepository.findAll();
-        assertThat(hardwareFileList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkCategoryIsRequired() throws Exception {
         int databaseSizeBeforeTest = hardwareFileRepository.findAll().size();
         // set the field null
@@ -312,8 +288,7 @@ public class HardwareFileResourceIntTest {
             .andExpect(jsonPath("$.[*].size").value(hasItem(DEFAULT_SIZE.intValue())))
             .andExpect(jsonPath("$.[*].mimeType").value(hasItem(DEFAULT_MIME_TYPE.toString())))
             .andExpect(jsonPath("$.[*].dateUploaded").value(hasItem(DEFAULT_DATE_UPLOADED.toString())))
-            .andExpect(jsonPath("$.[*].version").value(hasItem(DEFAULT_VERSION)))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].version").value(hasItem(DEFAULT_VERSION.toString())))
             .andExpect(jsonPath("$.[*].category").value(hasItem(DEFAULT_CATEGORY.toString())));
     }
     
@@ -332,8 +307,7 @@ public class HardwareFileResourceIntTest {
             .andExpect(jsonPath("$.size").value(DEFAULT_SIZE.intValue()))
             .andExpect(jsonPath("$.mimeType").value(DEFAULT_MIME_TYPE.toString()))
             .andExpect(jsonPath("$.dateUploaded").value(DEFAULT_DATE_UPLOADED.toString()))
-            .andExpect(jsonPath("$.version").value(DEFAULT_VERSION))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.version").value(DEFAULT_VERSION.toString()))
             .andExpect(jsonPath("$.category").value(DEFAULT_CATEGORY.toString()));
     }
 
@@ -363,7 +337,6 @@ public class HardwareFileResourceIntTest {
             .mimeType(UPDATED_MIME_TYPE)
             .dateUploaded(UPDATED_DATE_UPLOADED)
             .version(UPDATED_VERSION)
-            .status(UPDATED_STATUS)
             .category(UPDATED_CATEGORY);
 
         restHardwareFileMockMvc.perform(put("/api/hardware-files")
@@ -380,7 +353,6 @@ public class HardwareFileResourceIntTest {
         assertThat(testHardwareFile.getMimeType()).isEqualTo(UPDATED_MIME_TYPE);
         assertThat(testHardwareFile.getDateUploaded()).isEqualTo(UPDATED_DATE_UPLOADED);
         assertThat(testHardwareFile.getVersion()).isEqualTo(UPDATED_VERSION);
-        assertThat(testHardwareFile.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testHardwareFile.getCategory()).isEqualTo(UPDATED_CATEGORY);
 
         // Validate the HardwareFile in Elasticsearch
@@ -446,7 +418,6 @@ public class HardwareFileResourceIntTest {
             .andExpect(jsonPath("$.[*].mimeType").value(hasItem(DEFAULT_MIME_TYPE)))
             .andExpect(jsonPath("$.[*].dateUploaded").value(hasItem(DEFAULT_DATE_UPLOADED.toString())))
             .andExpect(jsonPath("$.[*].version").value(hasItem(DEFAULT_VERSION)))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].category").value(hasItem(DEFAULT_CATEGORY.toString())));
     }
 
