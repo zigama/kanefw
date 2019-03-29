@@ -5,8 +5,6 @@ import com.pivotaccess.kanefw.KanefwApp;
 import com.pivotaccess.kanefw.domain.Transaction;
 import com.pivotaccess.kanefw.domain.Device;
 import com.pivotaccess.kanefw.domain.Customer;
-import com.pivotaccess.kanefw.repository.CustomerRepository;
-import com.pivotaccess.kanefw.repository.DeviceRepository;
 import com.pivotaccess.kanefw.repository.TransactionRepository;
 import com.pivotaccess.kanefw.repository.search.TransactionSearchRepository;
 import com.pivotaccess.kanefw.web.rest.errors.ExceptionTranslator;
@@ -85,15 +83,11 @@ public class TransactionResourceIntTest {
     private MockMvc restTransactionMockMvc;
 
     private Transaction transaction;
-    
-    private CustomerRepository customerRepository;
-    
-    private DeviceRepository deviceRepository;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TransactionResource transactionResource = new TransactionResource(transactionRepository, mockTransactionSearchRepository, customerRepository, deviceRepository);
+        final TransactionResource transactionResource = new TransactionResource(transactionRepository, mockTransactionSearchRepository);
         this.restTransactionMockMvc = MockMvcBuilders.standaloneSetup(transactionResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

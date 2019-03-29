@@ -1,10 +1,7 @@
 package com.pivotaccess.kanefw.web.rest;
-import com.pivotaccess.kanefw.domain.Device;
 import com.pivotaccess.kanefw.domain.DeviceHealth;
 import com.pivotaccess.kanefw.repository.DeviceHealthRepository;
-import com.pivotaccess.kanefw.repository.DeviceRepository;
 import com.pivotaccess.kanefw.repository.search.DeviceHealthSearchRepository;
-import com.pivotaccess.kanefw.service.dto.DeviceHealthDTO;
 import com.pivotaccess.kanefw.web.rest.errors.BadRequestAlertException;
 import com.pivotaccess.kanefw.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -16,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.Instant;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,15 +35,10 @@ public class DeviceHealthResource {
     private final DeviceHealthRepository deviceHealthRepository;
 
     private final DeviceHealthSearchRepository deviceHealthSearchRepository;
-    
-    private final DeviceRepository deviceRepository;
 
-    public DeviceHealthResource(DeviceHealthRepository deviceHealthRepository,
-    							DeviceHealthSearchRepository deviceHealthSearchRepository,
-    							DeviceRepository deviceRepository) {
+    public DeviceHealthResource(DeviceHealthRepository deviceHealthRepository, DeviceHealthSearchRepository deviceHealthSearchRepository) {
         this.deviceHealthRepository = deviceHealthRepository;
         this.deviceHealthSearchRepository = deviceHealthSearchRepository;
-        this.deviceRepository = deviceRepository;
     }
 
     /**
@@ -67,51 +59,6 @@ public class DeviceHealthResource {
         return ResponseEntity.created(new URI("/api/device-healths/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
-    }
-    
-    @PostMapping("/device-healths")
-    public ResponseEntity<DeviceHealthDTO> createDeviceHealth(
-    				@RequestParam("deviceId") String deviceId,
-    				@RequestParam("timeStamp") String timeStamp,
-    				@RequestParam("rssi") String rssi,
-    				@RequestParam("locationLat") String locationLat,
-    				@RequestParam("locationLong") String locationLong,
-    				@RequestParam("devicePhoneNumber") String devicePhoneNumber,
-    				@RequestParam("deviceCarrier") String deviceCarrier,
-    				@RequestParam("printerStatus") String printerStatus
-    						) throws URISyntaxException {
-    	
-    	DeviceHealth deviceHealth = new DeviceHealth();
-    	Optional<Device> device = deviceRepository.findById(Long.parseLong(deviceId));
-    	
-        
-    	if (device.get() == null || device.get().getId() == null) {
-            throw new BadRequestAlertException("Invalid device ID", "Device", "notfound");
-        }
-        
-        
-        try {
-			deviceHealth.setDevice(device.get());
-			deviceHealth.setTimeStamp(Instant.ofEpochSecond(Long.parseLong(timeStamp)));
-			deviceHealth.setRssi(rssi);
-			deviceHealth.setLocationLat(locationLat);
-			deviceHealth.setLocationLong(locationLong);
-			deviceHealth.setDevicePhoneNumber(devicePhoneNumber);
-			deviceHealth.setDeviceCarrier(deviceCarrier);
-			deviceHealth.setPrinterStatus(printerStatus);
-			
-        	log.debug("REST request to save DeviceHealth : {}", deviceHealth);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-        
-        DeviceHealth result = deviceHealthRepository.save(deviceHealth);
-        deviceHealthSearchRepository.save(result);
-        
-        DeviceHealthDTO deviceHealthDTO = new DeviceHealthDTO(result);
-        return ResponseEntity.created(new URI("/api/device-healths/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(deviceHealthDTO);
     }
 
     /**
