@@ -1,9 +1,7 @@
 package com.pivotaccess.kanefw.web.rest;
 import com.pivotaccess.kanefw.domain.Hardware;
-import com.pivotaccess.kanefw.domain.HardwareFile;
 import com.pivotaccess.kanefw.repository.HardwareRepository;
 import com.pivotaccess.kanefw.repository.search.HardwareSearchRepository;
-import com.pivotaccess.kanefw.service.mapper.HardwareFileMapper;
 import com.pivotaccess.kanefw.web.rest.errors.BadRequestAlertException;
 import com.pivotaccess.kanefw.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -11,16 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -40,15 +35,10 @@ public class HardwareResource {
     private final HardwareRepository hardwareRepository;
 
     private final HardwareSearchRepository hardwareSearchRepository;
-    
-    private final HardwareFileMapper hardwareFileMapper;
 
-    public HardwareResource(HardwareRepository hardwareRepository, 
-    						HardwareSearchRepository hardwareSearchRepository,
-    						HardwareFileMapper hardwareFileMapper) {
+    public HardwareResource(HardwareRepository hardwareRepository, HardwareSearchRepository hardwareSearchRepository) {
         this.hardwareRepository = hardwareRepository;
         this.hardwareSearchRepository = hardwareSearchRepository;
-        this.hardwareFileMapper	= hardwareFileMapper;
     }
 
     /**
@@ -70,23 +60,6 @@ public class HardwareResource {
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
-    
-    @PostMapping("/hardwares/files")
-    public ResponseEntity<Hardware> createHardware(@Valid @RequestPart Hardware hardware, @RequestPart List<MultipartFile> files) throws URISyntaxException, IOException {
-       log.debug("REST request to save Hardware : {}", hardware);
-       if (hardware.getId() != null) {
-           throw new BadRequestAlertException("A new hardware cannot already have an ID", ENTITY_NAME, "idexists");
-       }
-
-       Set<HardwareFile> hardwareFiles = hardwareFileMapper.multiPartFilesToHardwareFiles(files);
-       hardwareFiles.forEach(hardware::addHardwareFile);
-
-       Hardware result = hardwareRepository.save(hardware);
-       return ResponseEntity.created(new URI("/api/hardwares/" + result.getId()))
-           .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-           .body(result);
-    }
-
 
     /**
      * PUT  /hardwares : Updates an existing hardware.

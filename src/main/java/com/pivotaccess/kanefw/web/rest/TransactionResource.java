@@ -1,12 +1,7 @@
 package com.pivotaccess.kanefw.web.rest;
-import com.pivotaccess.kanefw.domain.Customer;
-import com.pivotaccess.kanefw.domain.Device;
 import com.pivotaccess.kanefw.domain.Transaction;
-import com.pivotaccess.kanefw.repository.CustomerRepository;
-import com.pivotaccess.kanefw.repository.DeviceRepository;
 import com.pivotaccess.kanefw.repository.TransactionRepository;
 import com.pivotaccess.kanefw.repository.search.TransactionSearchRepository;
-import com.pivotaccess.kanefw.service.dto.TransactionDTO;
 import com.pivotaccess.kanefw.web.rest.errors.BadRequestAlertException;
 import com.pivotaccess.kanefw.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -18,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.Instant;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,19 +35,10 @@ public class TransactionResource {
     private final TransactionRepository transactionRepository;
 
     private final TransactionSearchRepository transactionSearchRepository;
-    
-    private final CustomerRepository customerRepository;
-    
-    private final DeviceRepository deviceRepository;
 
-    public TransactionResource(TransactionRepository transactionRepository, 
-    		TransactionSearchRepository transactionSearchRepository, 
-    		CustomerRepository customerRepository,
-    		DeviceRepository deviceRepository) {
+    public TransactionResource(TransactionRepository transactionRepository, TransactionSearchRepository transactionSearchRepository) {
         this.transactionRepository = transactionRepository;
         this.transactionSearchRepository = transactionSearchRepository;
-        this.customerRepository = customerRepository;
-        this.deviceRepository = deviceRepository;
     }
 
     /**
@@ -73,55 +59,6 @@ public class TransactionResource {
         return ResponseEntity.created(new URI("/api/transactions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
-    }
-    
-    
-    @PostMapping("/transactions")
-    public ResponseEntity<TransactionDTO> createTransaction(
-    		@RequestParam("deviceId") String deviceId,
-    		@RequestParam("timeStamp") String timeStamp,
-    		@RequestParam("clientFirstName") String clientFirstName,
-    		@RequestParam("clientLastName") String clientLastName,
-    		@RequestParam("accountNumber") String clientAccountNumber,
-    		@RequestParam("clientPinNumber") String clientPinNumber,
-    		@RequestParam("transactionAmount") String transactionAmount
-    		) throws URISyntaxException {
-        
-    	Transaction transaction = new Transaction();
-    	Optional<Device> device = deviceRepository.findById(Long.parseLong(deviceId));
-    	
-    	Customer customer = customerRepository.findByAccountNumberAndPin(clientAccountNumber, clientPinNumber);
-    	
-        if (customer == null || customer.getId() == null) {
-            throw new BadRequestAlertException("Invalid account number or pin", "Customer", "notfound");
-        }
-        
-        if (device.get() == null || device.get().getId() == null) {
-            throw new BadRequestAlertException("Invalid device ID", "Device", "notfound");
-        }
-        
-        try {
-        	transaction.setCustomer(customer);
-        	transaction.setDevice(device.get());
-            transaction.setTimeStamp(Instant.ofEpochSecond(Long.parseLong(timeStamp)));
-            transaction.setTransactionAmount(Double.parseDouble(transactionAmount));
-            
-            log.debug("REST request to save Transaction : {}", transaction);
-            
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-        
-        
-        Transaction result = transactionRepository.save(transaction);
-        
-        transactionSearchRepository.save(result);
-        
-        TransactionDTO transactionDTO = new TransactionDTO(result);
-        
-        return ResponseEntity.created(new URI("/api/transactions/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(transactionDTO);
     }
 
     /**

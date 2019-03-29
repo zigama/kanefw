@@ -36,7 +36,7 @@ public class Hardware implements Serializable {
     @Column(name = "serie")
     private String serie;
 
-    @OneToMany(mappedBy = "hardware", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "hardware")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<HardwareFile> hardwareFiles = new HashSet<>();
     @OneToMany(mappedBy = "hardware")
