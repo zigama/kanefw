@@ -14,6 +14,7 @@ export class HardwareUpdateComponent implements OnInit {
     hardware: IHardware;
     isSaving: boolean;
     files: FileList;
+    version: string;
 
     constructor(protected hardwareService: HardwareService, protected activatedRoute: ActivatedRoute) {}
 
@@ -34,10 +35,11 @@ export class HardwareUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+        alert(this.version);
         if (this.hardware.id !== undefined) {
             this.subscribeToSaveResponse(this.hardwareService.update(this.hardware));
         } else {
-            this.subscribeToSaveResponse(this.hardwareService.createHF(this.hardware, this.files));
+            this.subscribeToSaveResponse(this.hardwareService.createHF(this.hardware, this.files, this.version));
         }
     }
 

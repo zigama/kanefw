@@ -1,8 +1,12 @@
 package com.pivotaccess.kanefw.service.dto;
 
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 import javax.validation.constraints.Size;
 
 import com.pivotaccess.kanefw.domain.Transaction;
+
+
 
 public class TransactionDTO {
 	
@@ -24,7 +28,37 @@ public class TransactionDTO {
 	
 	private String transactionId;
 	
+	private String transactionAmount;
 	
+	private String previousBalance;
+	
+	private String currentBalance;	
+	
+	
+
+	public String getTransactionAmount() {
+		return transactionAmount;
+	}
+
+	public void setTransactionAmount(String transactionAmount) {
+		this.transactionAmount = transactionAmount;
+	}
+
+	public String getPreviousBalance() {
+		return previousBalance;
+	}
+
+	public void setPreviousBalance(String previousBalance) {
+		this.previousBalance = previousBalance;
+	}
+
+	public String getCurrentBalance() {
+		return currentBalance;
+	}
+
+	public void setCurrentBalance(String currentBalance) {
+		this.currentBalance = currentBalance;
+	}
 
 	public String getTimeStamp() {
 		return timeStamp;
@@ -96,6 +130,18 @@ public class TransactionDTO {
 		this.clientAccountNumber = transaction.getCustomer().getAccountNumber();
 		this.clientPinNumber = transaction.getCustomer().getPin();
 		this.transactionId	= String.valueOf(transaction.getId());
+		this.transactionAmount = String.valueOf(transaction.getTransactionAmount());
+		this.previousBalance = String.valueOf(transaction.getCustomer().getCurrentBalance());
+		this.currentBalance = String.valueOf(transaction.getCustomer().getCurrentBalance() -
+								transaction.getTransactionAmount());
+	}
+	
+	
+	public static String toJson(TransactionDTO transactionDTO){
+		
+		Jsonb jsonb = JsonbBuilder.create();
+		String result = jsonb.toJson(transactionDTO);		
+		return result;
 		
 	}
 

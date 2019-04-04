@@ -20,6 +20,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -76,21 +77,26 @@ public class TransactionResource {
     }
     
     
-    @PostMapping("/transactions")
-    public ResponseEntity<TransactionDTO> createTransaction(
-    		@RequestParam("deviceId") String deviceId,
-    		@RequestParam("timeStamp") String timeStamp,
-    		@RequestParam("clientFirstName") String clientFirstName,
-    		@RequestParam("clientLastName") String clientLastName,
-    		@RequestParam("accountNumber") String clientAccountNumber,
-    		@RequestParam("clientPinNumber") String clientPinNumber,
-    		@RequestParam("transactionAmount") String transactionAmount
+    @PostMapping("/testStartTransaction")
+    public ResponseEntity<TransactionDTO> createDeviceTransaction(
+    		@Valid @RequestBody Map<String, Object> transactionData
+    		//@RequestParam("deviceId") String deviceId,
+    		//@RequestParam("timeStamp") String timeStamp,
+    		//@RequestParam("clientFirstName") String clientFirstName,
+    		//@RequestParam("clientLastName") String clientLastName,
+    		//@RequestParam("accountNumber") String clientAccountNumber,
+    		//@RequestParam("clientPinNumber") String clientPinNumber,
+    		//@RequestParam("transactionAmount") String transactionAmount
     		) throws URISyntaxException {
         
+    	//log.debug("TRANSACTION DATA: {}", TransactionDTO.toJson(transactionData) );
     	Transaction transaction = new Transaction();
-    	Optional<Device> device = deviceRepository.findById(Long.parseLong(deviceId));
+    	Optional<Device> device = deviceRepository.findById(Long.parseLong(
+    												String.valueOf(transactionData.get("deviceId"))));
     	
-    	Customer customer = customerRepository.findByAccountNumberAndPin(clientAccountNumber, clientPinNumber);
+    	Customer customer = customerRepository.findByAccountNumberAndPin(
+    											String.valueOf(transactionData.get("accountNumber")),
+    											String.valueOf(transactionData.get("clientPinNumber")) );
     	
         if (customer == null || customer.getId() == null) {
             throw new BadRequestAlertException("Invalid account number or pin", "Customer", "notfound");
@@ -103,8 +109,10 @@ public class TransactionResource {
         try {
         	transaction.setCustomer(customer);
         	transaction.setDevice(device.get());
-            transaction.setTimeStamp(Instant.ofEpochSecond(Long.parseLong(timeStamp)));
-            transaction.setTransactionAmount(Double.parseDouble(transactionAmount));
+            transaction.setTimeStamp(Instant.ofEpochSecond(
+            							Long.parseLong(String.valueOf(transactionData.get("timeStamp")))));
+            transaction.setTransactionAmount(Double.parseDouble(
+            									String.valueOf(transactionData.get("transactionAmount"))));
             
             log.debug("REST request to save Transaction : {}", transaction);
             
@@ -117,9 +125,13 @@ public class TransactionResource {
         
         transactionSearchRepository.save(result);
         
+        customer.setCurrentBalance(customer.getCurrentBalance() - transaction.getTransactionAmount());
+        
+        customerRepository.save(customer);
+        
         TransactionDTO transactionDTO = new TransactionDTO(result);
         
-        return ResponseEntity.created(new URI("/api/transactions/" + result.getId()))
+        return ResponseEntity.created(new URI("/api/testStartTransaction/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(transactionDTO);
     }

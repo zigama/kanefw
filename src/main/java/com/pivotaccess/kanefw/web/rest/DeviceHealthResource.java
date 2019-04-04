@@ -1,9 +1,11 @@
 package com.pivotaccess.kanefw.web.rest;
 import com.pivotaccess.kanefw.domain.Device;
 import com.pivotaccess.kanefw.domain.DeviceHealth;
+import com.pivotaccess.kanefw.domain.HardwareFile;
 import com.pivotaccess.kanefw.repository.DeviceHealthRepository;
 import com.pivotaccess.kanefw.repository.DeviceRepository;
 import com.pivotaccess.kanefw.repository.search.DeviceHealthSearchRepository;
+import com.pivotaccess.kanefw.service.HardwareFileService;
 import com.pivotaccess.kanefw.service.dto.DeviceHealthDTO;
 import com.pivotaccess.kanefw.web.rest.errors.BadRequestAlertException;
 import com.pivotaccess.kanefw.web.rest.util.HeaderUtil;
@@ -18,6 +20,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -40,13 +43,17 @@ public class DeviceHealthResource {
     private final DeviceHealthSearchRepository deviceHealthSearchRepository;
     
     private final DeviceRepository deviceRepository;
+    
+    private final HardwareFileService hardwareFileService;
 
     public DeviceHealthResource(DeviceHealthRepository deviceHealthRepository,
     							DeviceHealthSearchRepository deviceHealthSearchRepository,
-    							DeviceRepository deviceRepository) {
+    							DeviceRepository deviceRepository,
+    							HardwareFileService hardwareFileService) {
         this.deviceHealthRepository = deviceHealthRepository;
         this.deviceHealthSearchRepository = deviceHealthSearchRepository;
         this.deviceRepository = deviceRepository;
+        this.hardwareFileService = hardwareFileService;
     }
 
     /**
@@ -69,20 +76,23 @@ public class DeviceHealthResource {
             .body(result);
     }
     
-    @PostMapping("/device-healths")
-    public ResponseEntity<DeviceHealthDTO> createDeviceHealth(
-    				@RequestParam("deviceId") String deviceId,
-    				@RequestParam("timeStamp") String timeStamp,
-    				@RequestParam("rssi") String rssi,
-    				@RequestParam("locationLat") String locationLat,
-    				@RequestParam("locationLong") String locationLong,
-    				@RequestParam("devicePhoneNumber") String devicePhoneNumber,
-    				@RequestParam("deviceCarrier") String deviceCarrier,
-    				@RequestParam("printerStatus") String printerStatus
+    @PostMapping("/deviceHealth")
+    public ResponseEntity<DeviceHealthDTO> sendDeviceHealthStatus(
+    				//@RequestParam("deviceId") String deviceId,
+    				//@RequestParam("timeStamp") String timeStamp,
+    				//@RequestParam("rssi") String rssi,
+    				//@RequestParam("locationLat") String locationLat,
+    				//@RequestParam("locationLong") String locationLong,
+    				//@RequestParam("devicePhoneNumber") String devicePhoneNumber,
+    				//@RequestParam("deviceCarrier") String deviceCarrier,
+    				//@RequestParam("printerStatus") String printerStatus
+    				@Valid @RequestBody Map<String, Object> deviceData
     						) throws URISyntaxException {
     	
     	DeviceHealth deviceHealth = new DeviceHealth();
-    	Optional<Device> device = deviceRepository.findById(Long.parseLong(deviceId));
+    	Optional<Device> device = deviceRepository.findById(Long.parseLong(
+										String.valueOf(deviceData.get("deviceId"))));
+
     	
         
     	if (device.get() == null || device.get().getId() == null) {
@@ -92,14 +102,64 @@ public class DeviceHealthResource {
         
         try {
 			deviceHealth.setDevice(device.get());
-			deviceHealth.setTimeStamp(Instant.ofEpochSecond(Long.parseLong(timeStamp)));
-			deviceHealth.setRssi(rssi);
-			deviceHealth.setLocationLat(locationLat);
-			deviceHealth.setLocationLong(locationLong);
-			deviceHealth.setDevicePhoneNumber(devicePhoneNumber);
-			deviceHealth.setDeviceCarrier(deviceCarrier);
-			deviceHealth.setPrinterStatus(printerStatus);
+			deviceHealth.setTimeStamp(Instant.ofEpochSecond(Long.parseLong(
+												String.valueOf(deviceData.get("timeStamp")))));
+			deviceHealth.setRssi(String.valueOf(deviceData.get("rssi")));
+			deviceHealth.setLocationLat(String.valueOf(deviceData.get("locationLat")));
+			deviceHealth.setLocationLong(String.valueOf(deviceData.get("locationLong")));
+			deviceHealth.setDevicePhoneNumber(String.valueOf(deviceData.get("devicePhoneNumber")));
+			deviceHealth.setDeviceCarrier(String.valueOf(deviceData.get("deviceCarrier")));
+			deviceHealth.setPrinterStatus(String.valueOf(deviceData.get("printerStatus")));
 			
+			HardwareFile latestFirmware = hardwareFileService.getLatestFirmware(device.get());
+			
+			deviceHealth.setNewAppVersion(latestFirmware.getVersion());
+			deviceHealth.setNewAppFileName(latestFirmware.getTitle());
+			
+        	log.debug("REST request to save DeviceHealth : {}", deviceHealth);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+        
+        DeviceHealth result = deviceHealthRepository.save(deviceHealth);
+        deviceHealthSearchRepository.save(result);
+        
+        DeviceHealthDTO deviceHealthDTO = new DeviceHealthDTO(result);
+        return ResponseEntity.created(new URI("/api/device-healths/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(deviceHealthDTO);
+    }
+    
+    @PostMapping("/Connect")
+    public ResponseEntity<DeviceHealthDTO> connectDevice(
+    				//@RequestParam("deviceId") String deviceId,
+    				//@RequestParam("appVersion") String appVersion,
+    				//@RequestParam("deviceType") String deviceType,
+    				//@RequestParam("lastUpdateTime") String lastUpdateTime,
+    				//@RequestParam("timeStamp") String timeStamp
+    				@Valid @RequestBody Map<String, Object> deviceData
+    						) throws URISyntaxException {
+    	
+    	DeviceHealth deviceHealth = new DeviceHealth();
+    	Optional<Device> device = deviceRepository.findById(Long.parseLong(
+    													String.valueOf(deviceData.get("deviceId"))));
+    	
+        
+    	if (device.get() == null || device.get().getId() == null) {
+            throw new BadRequestAlertException("Invalid device ID", "Device", "notfound");
+        }
+        
+        
+        try {
+			deviceHealth.setDevice(device.get());
+			deviceHealth.setTimeStamp(Instant.ofEpochSecond(Long.parseLong(
+										String.valueOf(deviceData.get("timeStamp")))));
+			
+			HardwareFile latestFirmware = hardwareFileService.getLatestFirmware(device.get());
+			
+			deviceHealth.setNewAppVersion(latestFirmware.getVersion());
+			deviceHealth.setNewAppFileName(latestFirmware.getTitle());
+						
         	log.debug("REST request to save DeviceHealth : {}", deviceHealth);
 		} catch (Exception e) {
 			// TODO: handle exception

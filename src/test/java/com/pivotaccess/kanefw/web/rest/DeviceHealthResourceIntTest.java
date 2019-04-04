@@ -7,6 +7,7 @@ import com.pivotaccess.kanefw.domain.Device;
 import com.pivotaccess.kanefw.repository.DeviceHealthRepository;
 import com.pivotaccess.kanefw.repository.DeviceRepository;
 import com.pivotaccess.kanefw.repository.search.DeviceHealthSearchRepository;
+import com.pivotaccess.kanefw.service.HardwareFileService;
 import com.pivotaccess.kanefw.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -115,11 +116,13 @@ public class DeviceHealthResourceIntTest {
     private DeviceHealth deviceHealth;
     
     private DeviceRepository deviceRepository;
+    
+    private HardwareFileService hardwareFileService;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final DeviceHealthResource deviceHealthResource = new DeviceHealthResource(deviceHealthRepository, mockDeviceHealthSearchRepository, deviceRepository);
+        final DeviceHealthResource deviceHealthResource = new DeviceHealthResource(deviceHealthRepository, mockDeviceHealthSearchRepository, deviceRepository, hardwareFileService);
         this.restDeviceHealthMockMvc = MockMvcBuilders.standaloneSetup(deviceHealthResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

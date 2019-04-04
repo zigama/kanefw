@@ -72,13 +72,16 @@ public class HardwareResource {
     }
     
     @PostMapping("/hardwares/files")
-    public ResponseEntity<Hardware> createHardware(@Valid @RequestPart Hardware hardware, @RequestPart List<MultipartFile> files) throws URISyntaxException, IOException {
-       log.debug("REST request to save Hardware : {}", hardware);
-       if (hardware.getId() != null) {
-           throw new BadRequestAlertException("A new hardware cannot already have an ID", ENTITY_NAME, "idexists");
+    public ResponseEntity<Hardware> createHardwareFC(@Valid @RequestPart Hardware hardware, @RequestPart List<MultipartFile> files, @RequestParam("version") String version) throws URISyntaxException, IOException {
+       log.debug("REST request to save Hardware : {} {}", hardware, files);
+       
+       Hardware oldCopy = hardwareRepository.findByModelAndSerie(hardware.getModel(), hardware.getSerie());
+       
+       if (oldCopy != null) {
+           hardware.setId(oldCopy.getId());
        }
-
-       Set<HardwareFile> hardwareFiles = hardwareFileMapper.multiPartFilesToHardwareFiles(files);
+              
+       Set<HardwareFile> hardwareFiles = hardwareFileMapper.multiPartFilesToHardwareFiles(hardware, files, version);
        hardwareFiles.forEach(hardware::addHardwareFile);
 
        Hardware result = hardwareRepository.save(hardware);

@@ -38,9 +38,12 @@ public class Hardware implements Serializable {
 
     @OneToMany(mappedBy = "hardware", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnore
     private Set<HardwareFile> hardwareFiles = new HashSet<>();
+    
     @OneToMany(mappedBy = "hardware", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnore
     private Set<Device> devices = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {

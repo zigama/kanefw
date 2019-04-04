@@ -34,12 +34,16 @@ public class Device implements Serializable {
     @Column(name = "serial_number", nullable = false, unique = true)
     private String serialNumber;
 
-    @OneToMany(mappedBy = "device")
+    @OneToMany(mappedBy = "device", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnore
     private Set<DeviceHealth> deviceHealths = new HashSet<>();
-    @OneToMany(mappedBy = "device")
+    
+    @OneToMany(mappedBy = "device", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JsonIgnore
     private Set<Transaction> transactions = new HashSet<>();
+    
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties("devices")

@@ -20,6 +20,12 @@ public interface HardwareFileRepository extends JpaRepository<HardwareFile, Long
 	@Query("SELECT hardwareFile FROM HardwareFile hardwareFile"
 			+ " WHERE hardwareFile.hardware =:hardware AND hardwareFile.category =:category"
 			+ " ORDER BY hardwareFile.version, hardwareFile.dateUploaded DESC")
-	HardwareFile findOneByHardwareAndCategoryOrderByVersionDateUploadedDesc( Hardware hardware, FileCategory category);
+	HardwareFile findOneByHardwareAndCategoryOrderByVersionDateUploadedDesc( @Param("hardware") Hardware hardware, @Param("category") FileCategory category);
+
+	@Query("SELECT hardwareFile FROM HardwareFile hardwareFile"
+			+ " WHERE hardwareFile.hardware =:hardware "
+			+ " AND hardwareFile.version =:version "
+			+ " AND hardwareFile.title =:title ")
+	HardwareFile findOneByHardwareAndVersionAndTitle(@Param("hardware") Hardware hardware, @Param("version") String version, @Param("title")String title);
 
 }

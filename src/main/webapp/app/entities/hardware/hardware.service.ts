@@ -21,13 +21,15 @@ export class HardwareService {
         return this.http.post<IHardware>(this.resourceUrl, hardware, { observe: 'response' });
     }
 
-    createHF(hardware: IHardware, files: FileList): Observable<EntityResponseType> {
+    createHF(hardware: IHardware, files: FileList, version: string): Observable<EntityResponseType> {
         const hardwareMultipartFormParam = 'hardware';
         const filesMultipartFormParam = 'files';
+        const versionFormParam = 'version';
         const formData: FormData = new FormData();
         const hardwareAsJsonBlob: Blob = new Blob([JSON.stringify(hardware)], { type: 'application/json' });
 
         formData.append(hardwareMultipartFormParam, hardwareAsJsonBlob);
+        formData.append(versionFormParam, version);
         for (let i = 0; i < files.length; i++) {
             formData.append(filesMultipartFormParam, files.item(i));
         }
