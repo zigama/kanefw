@@ -1,5 +1,8 @@
 package com.pivotaccess.kanefw.service.dto;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.validation.constraints.Size;
@@ -141,6 +144,23 @@ public class TransactionDTO {
 		
 		Jsonb jsonb = JsonbBuilder.create();
 		String result = jsonb.toJson(transactionDTO);		
+		return result;
+		
+	}
+	
+	public static String getTestTransactionResponse(TransactionDTO transactionDTO){
+		
+		Jsonb jsonb = JsonbBuilder.create();
+		Map<String, Object> transactionData = new HashMap<String, Object>();
+		transactionData.put("deviceId", transactionDTO.getDeviceId());
+		transactionData.put("timeStamp", transactionDTO.getTimeStamp());
+		transactionData.put("clientFirstName", transactionDTO.getClientFirstName());
+		transactionData.put("clientLastName", transactionDTO.getClientLastName());
+		transactionData.put("clientAccountNumber", transactionDTO.getClientAccountNumber());
+		transactionData.put("clientPinNumber", transactionDTO.getClientPinNumber());
+		transactionData.put("transactionId", transactionDTO.getTransactionId());
+		String result = jsonb.toJson(transactionData);	
+		
 		return result;
 		
 	}

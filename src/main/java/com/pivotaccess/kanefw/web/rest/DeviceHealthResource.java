@@ -77,7 +77,7 @@ public class DeviceHealthResource {
     }
     
     @PostMapping("/deviceHealth")
-    public ResponseEntity<DeviceHealthDTO> sendDeviceHealthStatus(
+    public ResponseEntity<String> sendDeviceHealthStatus(
     				//@RequestParam("deviceId") String deviceId,
     				//@RequestParam("timeStamp") String timeStamp,
     				//@RequestParam("rssi") String rssi,
@@ -127,11 +127,11 @@ public class DeviceHealthResource {
         DeviceHealthDTO deviceHealthDTO = new DeviceHealthDTO(result);
         return ResponseEntity.created(new URI("/api/device-healths/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(deviceHealthDTO);
+            .body(DeviceHealthDTO.getDeviceHealthResponse(deviceHealthDTO));
     }
     
     @PostMapping("/Connect")
-    public ResponseEntity<DeviceHealthDTO> connectDevice(
+    public ResponseEntity<String> connectDevice(
     				//@RequestParam("deviceId") String deviceId,
     				//@RequestParam("appVersion") String appVersion,
     				//@RequestParam("deviceType") String deviceType,
@@ -171,7 +171,8 @@ public class DeviceHealthResource {
         DeviceHealthDTO deviceHealthDTO = new DeviceHealthDTO(result);
         return ResponseEntity.created(new URI("/api/device-healths/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(deviceHealthDTO);
+            .body(DeviceHealthDTO.getConnectResponse(deviceHealthDTO));
+        
     }
 
     /**

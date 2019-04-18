@@ -1,5 +1,11 @@
 package com.pivotaccess.kanefw.service.dto;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
+
 import com.pivotaccess.kanefw.domain.DeviceHealth;
 
 public class DeviceHealthDTO {
@@ -209,6 +215,35 @@ public class DeviceHealthDTO {
 		this.otaServerIp = deviceHealth.getOtaServerIp();
 		this.newAppFileName = deviceHealth.getNewAppFileName();
 		
+	}
+	
+	public static String getConnectResponse(DeviceHealthDTO deviceHealthDTO){
+		Jsonb jsonb = JsonbBuilder.create();
+		Map<String, Object> deviceHealthData = new HashMap<String, Object>();
+		deviceHealthData.put("deviceId", deviceHealthDTO.getDeviceId());
+		deviceHealthData.put("timeStamp", deviceHealthDTO.getTimeStamp());
+		deviceHealthData.put("updateAvailable", deviceHealthDTO.getUpdateAvailable());
+		deviceHealthData.put("updateRequired", deviceHealthDTO.getUpdateRequired());
+		deviceHealthData.put("newAppVersion", deviceHealthDTO.getNewAppVersion());
+		deviceHealthData.put("otaServerIp", deviceHealthDTO.getOtaServerIp());
+		deviceHealthData.put("newAppFileName", deviceHealthDTO.getNewAppFileName());
+		String result = jsonb.toJson(deviceHealthData);
+		return result;
+	}
+	
+	public static String getDeviceHealthResponse(DeviceHealthDTO deviceHealthDTO){
+		Jsonb jsonb = JsonbBuilder.create();
+		Map<String, Object> deviceHealthData = new HashMap<String, Object>();
+		deviceHealthData.put("deviceId", deviceHealthDTO.getDeviceId());
+		deviceHealthData.put("timeStamp", deviceHealthDTO.getTimeStamp());
+		deviceHealthData.put("updateAvailable", deviceHealthDTO.getUpdateAvailable());
+		deviceHealthData.put("updateRequired", deviceHealthDTO.getUpdateRequired());
+		deviceHealthData.put("newAppVersion", deviceHealthDTO.getNewAppVersion());
+		deviceHealthData.put("otaServerIp", deviceHealthDTO.getOtaServerIp());
+		deviceHealthData.put("newAppFileName", deviceHealthDTO.getNewAppFileName());
+		String result = jsonb.toJson(deviceHealthData);
+		
+		return result;
 	}
 
 }

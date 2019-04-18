@@ -78,7 +78,7 @@ public class TransactionResource {
     
     
     @PostMapping("/testStartTransaction")
-    public ResponseEntity<TransactionDTO> createDeviceTransaction(
+    public ResponseEntity<String> createDeviceTransaction(
     		@Valid @RequestBody Map<String, Object> transactionData
     		//@RequestParam("deviceId") String deviceId,
     		//@RequestParam("timeStamp") String timeStamp,
@@ -133,7 +133,8 @@ public class TransactionResource {
         
         return ResponseEntity.created(new URI("/api/testStartTransaction/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(transactionDTO);
+            .body(TransactionDTO.getTestTransactionResponse(transactionDTO));
+        
     }
 
     /**
